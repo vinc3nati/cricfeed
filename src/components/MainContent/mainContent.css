@@ -1,0 +1,36 @@
+.section-heading {
+    font-size: 4rem;
+    font-weight: 700;
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+  
+  .section-heading::after {
+    display: block;
+    height: 2px;
+    background-color: var(--color-primary);
+    content: " ";
+    width: 100px;
+    margin: 0 auto;
+    margin-top: 20px;
+  }
+  
+  section {
+    padding: 2.5rem 1.8rem;
+  }
+
+  .chart-wrapper {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-column-gap: 3rem;
+    grid-row-gap: 3rem;
+    padding: 2rem 2rem 3rem;
+    overflow-y: auto;
+  }
+
+  @media only screen and (max-width: 600px) {
+    .chart-wrapper {
+      grid-template-columns: 1fr;
+    }
+  }

@@ -1,0 +1,12 @@
+.chart-container {
+    background-color: var(--color-background-accent);
+    height: 50rem;
+    padding: 15px 20px;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.06), 0 3px 6px rgba(0,0,0,0.13);
+    position: relative;
+    border-radius: var(--border-radius-10);
+    -webkit-border-radius: var(--border-radius-10);
+    -moz-border-radius: var(--border-radius-10);
+    -ms-border-radius: var(--border-radius-10);
+    -o-border-radius: var(--border-radius-10);
+}
