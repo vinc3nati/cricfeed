@@ -1,6 +1,6 @@
 import React from "react";
 import { MdLightMode, MdDarkMode } from "react-icons/md";
-import { useTheme } from "../../hooks/useTheme";
+import { useTheme } from "../../contexts/theme-context";
 
 export const ThemeSwitcher = () => {
   const { theme, toggleTheme } = useTheme();

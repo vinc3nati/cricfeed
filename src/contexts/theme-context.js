@@ -1,7 +1,17 @@
-import { useEffect, useLayoutEffect, useState } from "react";
-import { preferredColorScheme, THEME_KEY } from "../utils/constants";
+import {
+  createContext,
+  useContext,
+  useState,
+  useEffect,
+  useLayoutEffect,
+} from "react";
+import { THEME_KEY } from "../utils/constants";
 
-export const useTheme = () => {
+const ThemeContext = createContext();
+
+const preferredColorScheme = "(prefers-color-scheme: dark)";
+
+const ThemeProvider = ({ children }) => {
   const [theme, setTheme] = useState(
     () =>
       localStorage.getItem(THEME_KEY) ||
@@ -30,5 +40,19 @@ export const useTheme = () => {
     return () =>
       mediaQuery.removeEventListener("change", handleColorSchemeChange);
   }, []);
-  return { theme, toggleTheme };
+
+  return (
+    <ThemeContext.Provider value={{ theme, toggleTheme }}>
+      {children}
+    </ThemeContext.Provider>
+  );
 };
+
+const useTheme = () => {
+  const context = useContext(ThemeContext);
+  if (!context) throw new Error("Theme Context was not created");
+
+  return context;
+};
+
+export { useTheme, ThemeProvider };

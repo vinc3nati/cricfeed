@@ -2,8 +2,7 @@ import { useState, useEffect } from "react";
 import PapaParse from "papaparse";
 import { KeyInfo } from "../KeyInfo/KeyInfo";
 import { ChartComponent } from "../ChartComponent/ChartComponent";
-import { useLayoutEffect } from "react";
-import { useTheme } from "../../hooks/useTheme";
+import { useTheme } from "../../contexts/theme-context";
 
 export const MainContent = () => {
   const [chartData, setChartData] = useState({
@@ -20,10 +19,10 @@ export const MainContent = () => {
     rawBallByBallData: {},
   });
   const [keyInfos, setKeyInfos] = useState({
-    info1: 0,
-    info2: 0,
-    info3: 0,
-    info4: 0,
+    info1: {},
+    info2: {},
+    info3: {},
+    info4: {},
   });
   const { theme } = useTheme();
 
@@ -32,13 +31,19 @@ export const MainContent = () => {
     // set number of matches and superover
     setKeyInfos((prev) => ({
       ...prev,
-      info1: chartData.rawMatchData.data.length - 1,
+      info1: {
+        data: chartData.rawMatchData.data.length - 1,
+        title: "Total Matches",
+      },
     }));
     const superOvers = chartData.rawMatchData.data.reduce(
       (acc, curr) => (curr.IS_Superover === 1 ? acc + 1 : acc),
       0
     );
-    setKeyInfos((prev) => ({ ...prev, info2: superOvers }));
+    setKeyInfos((prev) => ({
+      ...prev,
+      info2: { data: superOvers, title: "Total SuperOvers" },
+    }));
   };
 
   const saveKeyInfoData3and4 = () => {
@@ -54,8 +59,14 @@ export const MainContent = () => {
     );
     setKeyInfos((prev) => ({
       ...prev,
-      info3: numBoundaries.fours,
-      info4: numBoundaries.sixes,
+      info3: {
+        data: numBoundaries.fours,
+        title: "Total Fours",
+      },
+      info4: {
+        data: numBoundaries.sixes,
+        title: "Total Sixes",
+      },
     }));
   };
 
@@ -399,10 +410,13 @@ export const MainContent = () => {
     <section id="maincontent-container">
       <header className="section-heading">IPL Statistics</header>
       <div className="key-info-container">
-        <KeyInfo data={keyInfos.info1} title="Total Matches" />
-        <KeyInfo data={keyInfos.info2} title="Total Superovers" />
-        <KeyInfo data={keyInfos.info3} title="Total Fours" />
-        <KeyInfo data={keyInfos.info4} title="Total Sixes" />
+        {Object.keys(keyInfos).map((item) => (
+          <KeyInfo
+            key={keyInfos[item].data}
+            data={keyInfos[item].data}
+            title={keyInfos[item].title}
+          />
+        ))}
       </div>
       <div className="chart-wrapper">
         {Object.keys(chartData.chartData1).length !== 0 && (

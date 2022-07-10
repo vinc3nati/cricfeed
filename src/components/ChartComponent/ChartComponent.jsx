@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Chart, registerables } from "chart.js";
 import { Chart as ChartJS } from "react-chartjs-2";
+import { useTheme } from "../../contexts/theme-context";
 
 Chart.register(...registerables);
 
